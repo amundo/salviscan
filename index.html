@@ -40,26 +40,53 @@ function secondsToTime(secs)
     return [stamp.h, stamp.m, stamp.s].join(':');
 }
 
+
 $(function(){
 
 
  var $ta = $('textarea');
       ta = $ta.get(0),
      $ul = $('ul'),
-      ul = $ul.get(0),
      $video = $('video'),
       video = $video.get(0),
+     $exporter = $('#exporter'),
+     $exportButton = $('#exportButton'),
+     $closeExportButton = $('#closeExportButton'),
       annotations = [];
-
- $(document).on('keyup', function(ev){
-
-   if (ev.which == 27){
-     if (video.paused) { video.play() } 
-     else { video.pause() }
-   }
-
- })
  
+  $(document).on('keyup', function(ev){
+ 
+    if (ev.which == 27){
+      if (video.paused) { video.play() } 
+      else { video.pause() }
+    }
+ 
+  })
+
+  function renderExport(annotations){
+    var output = '';
+    for(var i=0; i<annotations.length; i++){
+      var annotation = annotations[i];
+      output += [annotation.start,annotation.end,annotation.annotation].join("\t") + "\n";
+    }
+    return output;
+  }
+ 
+  $exportButton.on('click', function(ev){
+
+     if($exporter.css('visibility') == 'visible'){;
+       if($exporter.css('visibility', 'visible');
+     }
+
+     $exporter.find('textarea').val(renderExport(annotations));
+     
+  })
+ 
+ $closeExportButton.on('click', function(ev){
+    $exporter.hide();
+  
+ })
+
  $ta.on('keyup', function(ev){
 
   if( ev.which == 13){
@@ -108,7 +135,7 @@ $(function(){
 </div><!-- work -->
 
 
-<div id=export>
+<div id=exporter>
  <button id=closeExportButton>close</button>
  <textarea></textarea>
  <h2>cut &amp; paste this into a text file</h2>
