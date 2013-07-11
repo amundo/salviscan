@@ -74,17 +74,13 @@ $(function(){
  
   $exportButton.on('click', function(ev){
 
-     if($exporter.css('visibility') == 'visible'){;
-       if($exporter.css('visibility', 'visible');
-     }
-
+     $exporter.css('visibility', 'visible');
      $exporter.find('textarea').val(renderExport(annotations));
      
   })
  
  $closeExportButton.on('click', function(ev){
-    $exporter.hide();
-  
+     $exporter.css('visibility', 'hidden');
  })
 
  $ta.on('keyup', function(ev){

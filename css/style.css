@@ -9,13 +9,17 @@ body {
   background-color: hsl(205, 43%, 61%);
 }
 
+textarea:focus { 
+  outline: none;
+}
+
 .media { 
   float:right; 
   width: 50%;
 }
 
 #work { 
-  padding: .5em auto;
+  padding: .5em;
   background-color: white;
   width: 45%;
   border-radius: 10px;
@@ -28,11 +32,12 @@ ul#annotations, textarea#annotation{
 }
 
 textarea#annotation { 
-  margin: .5em auto;
   min-height: 4em;
-  border: none;
+  display:block;
+  border: 1px solid gray;
   background: 
   padding: 1em;
+  margin: 1em auto;
   font-family: sans-serif;
 }
 
@@ -57,7 +62,7 @@ nav {
   padding: 1em;
   left: 5%;
   border: 4px solid black;
-  height: 90%;
+  min-height: 90%;
   border-radius: 10px;
   width: 90%;
   background:white;
@@ -67,6 +72,7 @@ nav {
 #exporter textarea { 
   display:block;
   margin: .5em auto;
+  border: 1px solid gray;
   overflow:auto;
   font-family:monospace;
   width: 90%; 
