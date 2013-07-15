@@ -1,141 +1,40 @@
 <!doctype html>
 <html>
 <head>
-<title>salviscan</title>
-<meta charset=utf-8>
-<script src=js/jquery.js></script>
-<script src=js/underscore.js></script>
-<script src=js/backbone.js></script>
-<script src=js/d3.v3.js></script>
-<script src=js/prefixfree.js></script>
-
-<link rel="icon" type="image/png" href="img/favicon.png">
-
-<link rel=stylesheet href=css/style.css />
-<link rel=stylesheet href=css/mobile.css />
-<script>
-
-function show(obj){ console.log(JSON.stringify(obj, null, 2))}
-
-function secondsToTime(secs)
-{
-    var hours = Math.floor(secs / (60 * 60));
-
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-
-    var stamp = {
-        "h": hours,
-        "m": minutes,
-        "s": seconds
-    };
-
-    return [stamp.h, stamp.m, stamp.s].join(':');
-}
-
-
-$(function(){
-
-
- var $ta = $('textarea');
-      ta = $ta.get(0),
-     $ul = $('ul'),
-     $video = $('video'),
-      video = $video.get(0),
-     $exporter = $('#exporter'),
-     $exportButton = $('#exportButton'),
-     $closeExportButton = $('#closeExportButton'),
-      annotations = [];
- 
-  $(document).on('keyup', function(ev){
- 
-    if (ev.which == 27){
-      if (video.paused) { video.play() } 
-      else { video.pause() }
-    }
- 
-  })
-
-  function renderExport(annotations){
-    var output = '';
-    for(var i=0; i<annotations.length; i++){
-      var annotation = annotations[i];
-      output += [annotation.start,annotation.end,annotation.annotation].join("\t") + "\n";
-    }
-    return output;
-  }
- 
-  $exportButton.on('click', function(ev){
-
-     $exporter.css('visibility', 'visible');
-     $exporter.find('textarea').val(renderExport(annotations));
-     
-  })
- 
- $closeExportButton.on('click', function(ev){
-     $exporter.css('visibility', 'hidden');
- })
-
- $ta.on('keyup', function(ev){
-
-  if( ev.which == 13){
+  <title>salviscan</title>
+  <meta charset=utf-8>
   
-    var annotation = {};
-
-    annotation.end = video.currentTime;
-    annotation.annotation = ta.value.trim();
-
-    if(annotations.length == 0){
-      annotation.start = 0;
-      annotations.push(annotation);
-    } else { 
-      annotation.start = _.last(annotations).end;
-      annotations.push(annotation);
-    }
-    
-    show(annotations);
-
-    $ul.append('<li> [' + secondsToTime(annotation.start) + '—' + secondsToTime(annotation.end) + '] ' + annotation.annotation + '</li>');
-    ta.value = '';
-
-  };
-
- })
-
-
-})
-</script>
-
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel=stylesheet href=css/style.css />
+  <link rel=stylesheet href=css/mobile.css />
+  
+  <script src=js/jquery.js></script>
+  <script src=js/underscore.js></script>
+  <script src=js/stopwatch.js> </script>
+  <script src=js/timer.js> </script>
+  <script src=js/salviscan.js> </script>
 </head>
+
 <body>
-<nav>
-<button id=exportButton>export</button>
-</nav>
 
-<video class=media controls>
- <source src="media/genius.mov" >
-</video>
-
-<div id=work>
-<textarea id=annotation autofocus>
-
-</textarea>
-<ul id=annotations></ul>
-</div><!-- work -->
-
-
-<div id=exporter>
- <button id=closeExportButton>close</button>
- <textarea></textarea>
- <h2>cut &amp; paste this into a text file</h2>
-</div><!-- export -->
+  <nav>
+    <div id=clock>
+      <input autocomplete=off value=00:00:00>
+      <button id=startTimer>start</button>
+      <button id=stopTimer>stop</button>
+    </div>
+    <button id=exportButton>export</button>
+  </nav>
+  
+  <div id=work>
+    <ul id=annotations></ul>
+    <textarea id=annotation autofocus=false></textarea>
+  </div>
+  
+  <div id=exporter>
+   <button id=closeExportButton>close</button>
+   <textarea autocomplete=off></textarea>
+  </div>
 
 </body>
 </html>

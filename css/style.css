@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-
 body { 
   margin: 0 ;
   padding: 0;
@@ -15,45 +14,47 @@ textarea:focus {
 
 .media { 
   float:right; 
-  width: 50%;
+  display:none;
 }
 
 #work { 
   padding: .5em;
   background-color: white;
-  width: 45%;
+  width: 90%;
+  margin: 1em auto;
   border-radius: 10px;
+  min-height: 30em;
+  overflow:auto;  
 }
 
 ul#annotations, textarea#annotation{ 
   width:90%;  
   display:block;
- 
 }
 
 textarea#annotation { 
   min-height: 4em;
   display:block;
-  border: 1px solid gray;
+  border: 2px solid #ccc;
   background: 
   padding: 1em;
   margin: 1em auto;
   font-family: sans-serif;
 }
 
-ul#lines { 
+ul#annotations { 
+  min-height: 25em;
+  border-left: 1px solid gray;
+  margin: 0 auto;
   list-style-type: none;
-  max-height: 90%;
-  min-height: 10em;
   overflow:auto;
 }
 
 nav { 
-  text-align:right;
+  padding: 1em;
   background: hsl(197, 1%, 87%);
   border-bottom: 2px solid hsl(197, 1%, 68%);
   margin-bottom: 1em;
-
 }
 
 #exporter { 
@@ -74,7 +75,11 @@ nav {
   margin: .5em auto;
   border: 1px solid gray;
   overflow:auto;
+  width: 80%;
+  min-height: 30em;
   font-family:monospace;
-  width: 90%; 
-  height: 90%; 
+}
+
+#clock { 
+  float:right;
 }
