@@ -2,17 +2,18 @@ app = {};
 
 function show(obj){ console.log(JSON.stringify(obj, null, 2))}
 
-function timeToSeconds(time){
+function timeToMilliseconds(time){
   parts = time.split(':');
   seconds = parseInt(parts[2]); 
   minutes = parseInt(parts[1]);
   hours = parseInt(parts[0]); 
 
-  var converted = (hours * 60 * 60) + (minutes * 60) + seconds;
-  return converted;
+  var seconds = (hours * 60 * 60) + (minutes * 60) + seconds;
+  var milliseconds = 1000 * seconds;
+  return milliseconds;
 }
 
-function secondsToTime(secs){
+function oldSecondsToTime(secs){
     var hours = Math.floor(secs / (60 * 60));
 
     var divisor_for_minutes = secs % (60 * 60);
@@ -35,6 +36,20 @@ function secondsToTime(secs){
 }
 
 
+function secondsToTime(ms) {
+  var seconds = parseInt(ms / 1000);
+  var hh = Math.floor(seconds / 3600);
+  var mm = Math.floor((seconds - (hh * 3600)) / 60);
+  var ss = seconds - (hh * 3600) - (mm * 60);
+
+  if (hh < 10) {hh = '0' + hh}
+  if (mm < 10) {mm = '0' + mm}
+  if (ss < 10) {ss = '0' + ss}
+
+  return hh + ':' + mm + ':' + ss;
+};
+    
+
 $(function(){
 
  var $ta = $('textarea#annotation');
@@ -55,22 +70,24 @@ $(function(){
   }
  
   $('#startTimer').on('click', function(ev){
-    var  offset = timeToSeconds($('#clock input').val());
 
-    app.timer = new Timer();
-
-    if(offset>0){
-      app.timer.addTime(offset) 
-    }
+    if(app.date == null){
+      var diff = new Date().getTime() - new Date(timeToMilliseconds($('#clock input').val())).getTime();
+      app.date = new Date(diff);
+    } 
 
     function updateClock(){ 
-      $('#clock input').val(app.timer.current())
+      var current = new Date(new Date().getTime() - app.date.getTime());
+      $('#clock input').val(secondsToTime(current.getTime()))
     }
 
     app.clockRef = setInterval(updateClock, 500);
   })
 
-  $('#stopTimer').on('click', function(){ clearInterval(app.clockRef) }); 
+  $('#stopTimer').on('click', function(){ 
+    app.date = null;
+    clearInterval(app.clockRef) 
+  }); 
 
   $exportButton.on('click', function(ev){
 
@@ -89,7 +106,7 @@ $(function(){
   
     var annotation = {};
 
-    annotation.end = timeToSeconds($('#clock input').val()); 
+    annotation.end = timeToMilliseconds($('#clock input').val()); 
     annotation.annotation = ta.value.trim();
 
     if(annotations.length == 0){
