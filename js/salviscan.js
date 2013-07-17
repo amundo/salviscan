@@ -23,10 +23,11 @@ $(function(){
  
   $('#startTimer').on('click', function(ev){
 
-    if(app.date == null){
-      var diff = new Date().getTime() - new Date(timeToSeconds($('#clock input').val())).getTime();
+    //if(app.date == null){
+      var current = timeToSeconds($('#clock input').val());
+      var diff = new Date().getTime() - new Date(current).getTime();
       app.date = new Date(diff);
-    } 
+    //} 
 
     function updateClock(){ 
       var current = new Date(new Date().getTime() - app.date.getTime());
@@ -73,7 +74,8 @@ $(function(){
     var annotation = {};
 
     annotation.end = timeToSeconds($('#clock input').val()); 
-    annotation.end = app.date.getTime(); 
+    var end = secondsToTime(app.date.getTime()); 
+    annotation.end = secondsToTime(app.date.getTime()); 
     annotation.annotation = ta.value.trim();
 
     if(annotations.length == 0){
@@ -86,7 +88,7 @@ $(function(){
     
     localStorage.lynnette = JSON.stringify(annotations,null,2);
 
-    $ul.append('<li><small> [' + secondsToTime(annotation.end) + ']</small> ' + annotation.annotation + '</li>');
+    $ul.append('<li><small> [' + annotation.end + ']</small> ' + annotation.annotation + '</li>');
     ta.value = '';
 
   };

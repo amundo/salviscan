@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>testing salviscan.js</title>
+<style>
+.fail { color: red; }
+.pass { color: green; }
+</style>
+</head>
+<body>
+<ul id=output></ul>
+
+<script src=assert.js></script>
+<script src=timeutil.js></script>
+<script src=salviscan.js></script>
+<script>
+var seconds =  10;
+var time =  '00:00:10';
+
+assert( '63 seconds is the time 00:01:03',
+  63 ==  timeToSeconds('00:01:03') )
+  
+</script>
+
+</body>
+</html>
+

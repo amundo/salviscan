@@ -1,4 +1,8 @@
 function timeToSeconds(time){
+  /* convert an hh:mm:ss timestamp to an integer number of seconds */
+  //if(typeof(time) != 'string')
+  //  throw new Error('timeToSeconds requires a string, gave ' + typeof(time) + ':' + time)
+  if(typeof(time) != 'string') time = String(time);
   parts = time.split(':');
   seconds = parseInt(parts[2]); 
   minutes = parseInt(parts[1]);
@@ -6,8 +10,23 @@ function timeToSeconds(time){
 
   var seconds = (hours * 60 * 60) + (minutes * 60) + seconds;
   //var milliseconds = 1000 * seconds;
+  if(typeof(seconds) != 'number')
+    throw new Error('timeToSeconds should return a number but it did not: ' + seconds + typeof(seconds))
   return seconds;
 }
+
+
+function secondsToTime(seconds) {
+  var hh = Math.floor(seconds / 3600);
+  var mm = Math.floor((seconds - (hh * 3600)) / 60);
+  var ss = seconds - (hh * 3600) - (mm * 60);
+
+  if (hh < 10) {hh = '0' + hh}
+  if (mm < 10) {mm = '0' + mm}
+  if (ss < 10) {ss = '0' + ss}
+
+  return hh + ':' + mm + ':' + ss;
+};
 
 function oldSecondsToTime(secs){
     var hours = Math.floor(secs / (60 * 60));
@@ -31,16 +50,3 @@ function oldSecondsToTime(secs){
     return [stamp.h, stamp.m, stamp.s].join(':');
 }
 
-
-function secondsToTime(ms) {
-  var seconds = parseInt(ms / 1000);
-  var hh = Math.floor(seconds / 3600);
-  var mm = Math.floor((seconds - (hh * 3600)) / 60);
-  var ss = seconds - (hh * 3600) - (mm * 60);
-
-  if (hh < 10) {hh = '0' + hh}
-  if (mm < 10) {mm = '0' + mm}
-  if (ss < 10) {ss = '0' + ss}
-
-  return hh + ':' + mm + ':' + ss;
-};

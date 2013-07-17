@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>testing timeutils.js</title>
+<style>
+.fail { color: red; }
+.pass { color: green; }
+</style>
+</head>
+<body>
+<ol id=output></ol>
+
+<script src=assert.js></script>
+<script src=timeutil.js></script>
+<script>
+
+var seconds =  10;
+var time =  '00:00:10';
+
+
+assert( 'secondsToTime() returns a string',
+ 	'string' ==  typeof(secondsToTime(10)) 
+	);
+
+
+assert( 'timeToSeconds() returns a number',
+	'number' ==  typeof(timeToSeconds('00:00:10')) 
+	);
+
+
+var oneHourOneMinuteTenSeconds = 60*60*1 + 60*1 + 10;
+assert( 'secondsToTime(3670) == "01:01:10"',
+	'01:01:10' ==  secondsToTime(3670)  
+	);
+
+assert( 'secondsToTime("01:01:10") == 3670',
+	3670 ==  timeToSeconds('01:01:10')  
+	);
+
+assert( 'timeToSeconds inverse of secondsToTime',
+	time  ==  secondsToTime(timeToSeconds(seconds))
+); 
+
+assert( 
+	'secondsToTime(timeToSeconds("00:00:10")) is 10 so they are inverse',
+	seconds ==  timeToSeconds(secondsToTime(time))
+); 
+
+
+
+assert( seconds ==  timeToSeconds('00:00:10'), '00:00:10 is 10 seconds');
+
+
+assert( seconds !=  timeToSeconds('00:00:20'), '00:00:20 is not 10 seconds');
+
+
+assert( 63 ==  timeToSeconds('00:01:03'), '63 seconds is the time 00:01:03');
+
+function timeDiff(a,b){
+  return timeToSeconds(b)  - timeToSeconds(a)
+}
+
+
+assert( 500 == timeDiff('01:40:02','01:48:22'), "01:40:02 to 01:48:22  is 500 seconds")
+  
+</script>
+
+</body>
+</html>
+
