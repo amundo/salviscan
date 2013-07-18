@@ -28,6 +28,14 @@ function secondsToTime(seconds) {
   return hh + ':' + mm + ':' + ss;
 };
 
+function addTimes(a,b){
+  return secondsToTime(timeToSeconds(a) + timeToSeconds(b));
+}
+
+function subtractTimes(a,b){
+  return secondsToTime(timeToSeconds(a) - timeToSeconds(b));
+}
+
 function oldSecondsToTime(secs){
     var hours = Math.floor(secs / (60 * 60));
 

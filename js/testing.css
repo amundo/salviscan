@@ -1,0 +1,14 @@
+.pass:before {  
+  font-size: small;
+  content: '[PASS] ';  
+  color:  green;  
+  font-weight: bold;  
+}  
+  
+.fail:before {  
+  font-size: small;
+  content: '[FAIL] ';  
+  color: red;  
+  font-weight: bold;  
+      
+}  

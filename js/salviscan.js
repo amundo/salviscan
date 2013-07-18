@@ -23,22 +23,24 @@ $(function(){
  
   $('#startTimer').on('click', function(ev){
 
-    //if(app.date == null){
-      var current = timeToSeconds($('#clock input').val());
-      var diff = new Date().getTime() - new Date(current).getTime();
-      app.date = new Date(diff);
-    //} 
+    if(app.takeoff == null){
+      var takeoff = timeToSeconds($('#clock input').val());
+      app.date = new Date(takeoff);
+    } 
 
     function updateClock(){ 
-      var current = new Date(new Date().getTime() - app.date.getTime());
-      $('#clock input').val(secondsToTime(current.getTime()))
+      var currentSeconds = new Date().getTime()/1000 - app.date.getTime()/1000;
+      var currentDate = new Date(currentSeconds);
+      console.log(currentDate);
+      console.log(currentDate.getTime());
+      $('#clock input').val(secondsToTime(currentDate.getTime()));
     }
 
     app.clockRef = setInterval(updateClock, 500);
   })
 
   $('#stopTimer').on('click', function(){ 
-    app.date = null;
+    app.takeoff = null;
     clearInterval(app.clockRef) 
   }); 
 
@@ -54,7 +56,9 @@ $(function(){
  })
 
  $('#reloadButton').on('click', function(ev){
-    annotations = JSON.parse(localStorage.lynnette);
+    if (localStorage.lynnette){
+      annotations = JSON.parse(localStorage.lynnette);
+    }
 
     $ul.html('');
 

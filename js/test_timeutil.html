@@ -3,10 +3,7 @@
 <head>
 <meta charset=utf-8>
 <title>testing timeutils.js</title>
-<style>
-.fail { color: red; }
-.pass { color: green; }
-</style>
+<link rel=stylesheet href=testing.css></link>
 </head>
 <body>
 <ol id=output></ol>
@@ -15,7 +12,6 @@
 <script src=timeutil.js></script>
 <script>
 
-var seconds =  10;
 var time =  '00:00:10';
 
 
@@ -39,30 +35,42 @@ assert( 'secondsToTime("01:01:10") == 3670',
 	);
 
 assert( 'timeToSeconds inverse of secondsToTime',
-	time  ==  secondsToTime(timeToSeconds(seconds))
+	"00:00:10"  ==  secondsToTime(timeToSeconds("00:00:10"))
 ); 
 
 assert( 
 	'secondsToTime(timeToSeconds("00:00:10")) is 10 so they are inverse',
-	seconds ==  timeToSeconds(secondsToTime(time))
+	10 ==  timeToSeconds(secondsToTime(10))
 ); 
 
+assert(  '00:00:10 is 10 seconds',
+	 10 ==  timeToSeconds('00:00:10')
+);
 
+assert( '00:00:20 is not 10 seconds',
+	10 !=  timeToSeconds('00:00:20')
+);
 
-assert( seconds ==  timeToSeconds('00:00:10'), '00:00:10 is 10 seconds');
-
-
-assert( seconds !=  timeToSeconds('00:00:20'), '00:00:20 is not 10 seconds');
-
-
-assert( 63 ==  timeToSeconds('00:01:03'), '63 seconds is the time 00:01:03');
+assert( '63 seconds is the time 00:01:03',
+	63 ==  timeToSeconds('00:01:03')
+);
 
 function timeDiff(a,b){
   return timeToSeconds(b)  - timeToSeconds(a)
 }
 
 
-assert( 500 == timeDiff('01:40:02','01:48:22'), "01:40:02 to 01:48:22  is 500 seconds")
+assert( "01:40:02 to 01:48:22  is 500 seconds", 
+	500 == timeDiff('01:40:02','01:48:22')
+);
+
+assert( "add timestamps", 
+	"01:02:01" == addTimes("01:01:59", "00:00:02")
+);
+
+assert( "subtract timestamps", 
+	"01:01:59" == subtractTimes("01:02:01", "00:00:02")
+);
   
 </script>
 

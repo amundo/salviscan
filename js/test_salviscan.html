@@ -3,14 +3,16 @@
 <head>
 <meta charset=utf-8>
 <title>testing salviscan.js</title>
-<style>
-.fail { color: red; }
-.pass { color: green; }
-</style>
+<link rel=stylesheet href=testing.css></link>
 </head>
 <body>
+<div id=clock>
+  <input autocomplete=off value="01:01:10">
+</div>
+
 <ul id=output></ul>
 
+<script src=jquery.js></script>
 <script src=assert.js></script>
 <script src=timeutil.js></script>
 <script src=salviscan.js></script>
@@ -19,9 +21,62 @@ var seconds =  10;
 var time =  '00:00:10';
 
 assert( '63 seconds is the time 00:01:03',
-  63 ==  timeToSeconds('00:01:03') )
+  63 ==  timeToSeconds('00:01:03') 
+);
+
+var sampleTime = $('#clock input').val();
+
+assert( 'input contains 01:01:10',
+	"01:01:10" ==  sampleTime
+);
+
+assert( 'input in seconds is 3670',
+	3670 == timeToSeconds(sampleTime)
+);
+
+assert( "add 10 seconds to clock", 
+	"01:01:20" == addTimes($('#clock input').val(), '00:00:10')
+);
+
+assert( "add 50 seconds to clock", 
+	"01:02:00" == addTimes($('#clock input').val(), '00:00:50')
+);
+
+assert( "add 60 seconds to clock", 
+	"01:02:10" == addTimes($('#clock input').val(), '00:00:60')
+);
+
+$('#clock input').val(addTimes($('#clock input').val(), '00:00:60'))
+assert( "add 60 seconds to clock and update", 
+	"01:02:10" == $('#clock input').val()
+);
   
+assert( "add 60 seconds to clock and update", 
+	"01:02:10" == $('#clock input').val()
+
+) ;
+
+var annotations = [
+    {
+        "annotation": "first", 
+        "end": "00:00:03", 
+        "start": "00:00:00"
+    }, 
+    {
+        "annotation": "second", 
+        "end": "00:00:06", 
+        "start": "00:00:03"
+    }, 
+    {
+        "annotation": "third", 
+        "end": "00:00:09", 
+        "start": "00:00:06"
+    }
+]
+
 </script>
+
+
 
 </body>
 </html>
